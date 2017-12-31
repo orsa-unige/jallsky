@@ -21,11 +21,11 @@ var db = new mongo.Db(config.mongo.database, new mongo.Server(config.mongo.ip, c
 (function(){
 
     /// Shows last entry
-    exports.last_entry = function(cb){
+    exports.last_entry = function(coll,cb){
 	db.open(function(err, db) {
 	    if (err) throw err;
-	    console.log("opening");
-	    db.collection(config.mongo.collection, function(err, collection) {
+	    console.log("db: opening");
+	    db.collection(coll, function(err, collection) {
 		if (err) throw err;
 		collection.find({}).limit(1).sort({dateobs:-1}).toArray(function(err,result){
 		    if (err) throw err;
@@ -41,10 +41,10 @@ var db = new mongo.Db(config.mongo.database, new mongo.Server(config.mongo.ip, c
 
 
     /// Shows last n entries
-    exports.last_n = function(n,cb){
+    exports.last_n = function(n,coll,cb){
 	db.open(function(err, db) {
 	    if (err) throw err;
-	    db.collection(config.mongo.collection, function(err, collection) {
+	    db.collection(coll, function(err, collection) {
 		collection.find({}).limit(n).sort({dateobs:-1}).toArray(function(err,result){
 		    if (err) throw err;
 		    cb(result);
@@ -55,13 +55,13 @@ var db = new mongo.Db(config.mongo.database, new mongo.Server(config.mongo.ip, c
     };
 
     /// Insert a document
-    exports.enter = function(doc,cb){
+    exports.enter = function(doc,coll,cb){
 	db.open(function(err, db) {
 	    if (err) throw err;
-	    db.collection(config.mongo.collection, function(err, collection) {
+	    db.collection(coll, function(err, collection) {
 		doc._id=null; /// Reset to avoid error for duplicate entry. Infame maledetto!
 	    	collection.insert(doc, function() {
-	    	    console.log("inserting");
+	    	    console.log("db: inserting");
 	    	    cb(doc);
 	    	    db.close(function() {
 		    });
@@ -72,12 +72,12 @@ var db = new mongo.Db(config.mongo.database, new mongo.Server(config.mongo.ip, c
 
 
     /// Update a document
-    exports.update = function(doc,cb){
+    exports.update = function(doc,coll,cb){
 	db.open(function(err, db) {
 	    if (err) throw err;
 	    var myquery = { address: "Valley 345" };
 	    var newvalues = { name: "Mickey", address: "Canyon 123" };
-	    db.collection(config.mongo.collection).update(
+	    db.collection(coll).update(
 		myquery,
 		newvalues,
 		{}, // options

@@ -15,7 +15,7 @@
 var julian = require("julian");     /// Julian Date conversion.
 var fs=require("fs");                /// File stream for node-fits.
 
-var fits = require('./node-fits/build/Release/fits'); /// Manages fits files.
+var fits = require('../node-fits/build/Release/fits'); /// Manages fits files.
 var config= require('./config.json');   /// Configuration file.
 var allsky_mod=require("./allsky_drv.js");
 
@@ -62,7 +62,9 @@ var allsky_mod=require("./allsky_drv.js");
 
         return new Promise(function(ok, fail){
 
-            var f = new fits.file(params.fitsname); //The file is automatically opened (for reading) if the file name is specified on constructor.
+            /// The file is automatically opened (for reading) if the
+            /// file name is specified on constructor.
+            var f = new fits.file(params.fitsname); 
 
             f.get_headers(function(error, headers){
 
@@ -191,9 +193,6 @@ var allsky_mod=require("./allsky_drv.js");
 
 		ws_server.broadcast("image_data_func",message); /// To all connected peers!
 
-                // ws.send("image_data_func",message).catch(function(err){
-                //     console.log("Websocket error sending message: "+err);
-                // });
             });
 
             console.log("launch_exposure: Got image!");
@@ -201,10 +200,6 @@ var allsky_mod=require("./allsky_drv.js");
             await create_png(params);
 
             ws_server.broadcast("create_png",params);  /// To all connected peers!
-
-	    // 	.catch(function(err){
-            //     console.log("Websocket error sending message: "+err);
-            // });
 
         }
         catch( error){
