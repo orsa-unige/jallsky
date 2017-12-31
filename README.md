@@ -1,4 +1,4 @@
-## Synopsis
+## jallsky, a node.js way to control an AllSky Camera
 
 **jallsky** is a `node.js` system control for the **SBIG AllSky 340M Camera**.
 
@@ -38,23 +38,22 @@ http://yoember.com/nodejs/the-best-way-to-install-node-js/
 On Linux (other OS are treated in the previous link):
 
 ```bash
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
-    
-    nvm list
-    nvm ls-remote
-    nvm install 7.10.0
-    nvm use 7.10.0
-    nvm alias default 7.10.0
-    node -v
-    npm install -g npm
-    npm -v
-    
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+
+nvm list
+nvm ls-remote
+nvm install 7.10.0
+nvm use 7.10.0
+nvm alias default 7.10.0
+node -v
+npm install -g npm
+npm -v
 ```
     
 On Mac, add the following line in `.bash_profile`:
     
 ```bash
-    source ~/.nvm/nvm.sh
+source ~/.nvm/nvm.sh
 ```
 
 ## Install some software that will be used
@@ -62,8 +61,8 @@ On Mac, add the following line in `.bash_profile`:
 On Debian-based linux distributions:
 
 ```bash
- sudo apt-get install node node-gyp g++ libpng-dev libjpeg-dev libcfitsio3-dev 
- sudo apt-get install mongodb
+sudo apt-get install node node-gyp g++ libpng-dev libjpeg-dev libcfitsio3-dev 
+sudo apt-get install mongodb
 ```
 
 ## Install this repository
@@ -71,41 +70,37 @@ On Debian-based linux distributions:
 Clone this repository:
  
 ```bash
-    git clone https://github.com/orsa-unige/jallsky.git 
+git clone https://github.com/orsa-unige/jallsky.git 
 ```
 
 Enter in the jallsky directory and then:
 
 ```bash
-    npm -f install 
+npm -f install 
 ```
 
-## Install external repositories
+## Install external repositories: 
 
-Clone the external repositories used by this project.
-
-### ws_protocol_layer
+Clone the external `ws_protocol_layer` and `node-fits` repositories used by this project.
 
 ```bash
-    https://github.com/Nunkiii/ws_protocol_layer.git
+https://github.com/Nunkiii/ws_protocol_layer.git
 ```
-Enter in the directory and then:
+Enter in its directory and then:
 
 ```bash
-    npm -f install
+npm -f install
 ```
 
-### node-fits
-
 ```bash
-    https://github.com/Nunkiii/node-fits.git
+https://github.com/Nunkiii/node-fits.git
 ```
 
 `node-fits` has to be built. In its directory:
 
 ```bash
-    node-gyp configure
-    node-gyp build
+node-gyp configure
+node-gyp build
 ```
 
 ## Configuration
@@ -120,7 +115,7 @@ Enter in the directory and then:
  - open the html page and use the camera;
 
 
-# If you want to modify the page style
+## If you want to modify the page style
 
 Install `ruby`  order to get `sass`, then install `sass`.
 On Debian-based distributions:
@@ -133,13 +128,11 @@ On Debian-based distributions:
 Then `sass --watch style.sass:style.css` in order to dinamically compile the `sass` file into `css` at each saving.
 
 
-## Contributors
+### Contributors
 
 Davide Ricci
 Pierre Sprimont
 
-## License
+### License
 
 This program is free software.
-=======
-# jallsky
