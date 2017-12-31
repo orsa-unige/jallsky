@@ -1,9 +1,7 @@
-
-
 /**
  * @file   client.js
  * @author Davide Ricci
- * @date   Sat Apr 22 01:52:25 2017
+ * @date   2017-31-12
  *
  * @brief Grabs information from the webpage and send it to the
  *        server.  d3.js code draws an histogram of the values.

@@ -1,3 +1,11 @@
+/**
+ * @file   form-params.js
+ * @author Davide Ricci
+ * @date   2017-31-12
+ *
+ * @brief manages the input form of the web page.
+ *        
+ */
 
 $("#imagetyp").change(function(){ // var ifdark = this.value == "dark"
     // $("#exptime").prop("disabled",ifdark)

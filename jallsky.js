@@ -1,9 +1,9 @@
 /**
  * @file   allsky_drv.js
  * @author Pierre Sprimont and Davide Ricci (davide.ricci82@gmail.com)
- * @date   Thu Dec 14 10:55:11 2017
+ * @date   2017-31-12
  *
- * @brief  AllSky 340M Camera driver in node.js
+ * @brief  AllSky 340M Camera driver.
  *
  *
  */
@@ -356,7 +356,7 @@ class allsky{
     }
 
     /**
-     *
+     * get_image
      *
      * @param params
      * @param progress_callback Function to be called after each block is downloaded.

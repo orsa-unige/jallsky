@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-
 /**
- * @file   server.2.js
+ * @file   server.js
  * @author Davide Ricci (davide.ricci82@gmail.com) and Pierre Sprimont
- * @date   Thu Dec 14 11:18:29 2017
+ * @date   2017-12-31
  * 
  * @brief  Manages client data and dispatches messages to the database.
  *
@@ -17,7 +16,7 @@ var ws_mod=require("../ws_protocol_layer/lib/node/ws_server.js");
 var http = require('http');    
 
 var config= require('./config.json');   /// Configuration file.
-var db_obs= require('./db_obs.js');    /// DB functions.
+var db_obs= require('./db_obs.js');     /// DB functions.
 var schedule =require('./schedule.js'); /// Launches observations.
 
 /// 1) Create http server and listening.
