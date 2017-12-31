@@ -12,7 +12,7 @@
 
 "use strict";
 
-var ws_mod=require("./ws_protocol_layer/lib/node/ws_server.js");
+var ws_mod=require("../ws_protocol_layer/lib/node/ws_server.js");
 
 var http = require('http');    
 
@@ -32,10 +32,10 @@ var auto_expo_on=false;
 var mod_pack={
 
     abort : function(msg, reply){
-	console.log("Abort in progress...");
+	console.log("server: abort in progress...");
 	schedule.abort(msg.data, function (){
-	    console.log("Abort done and com port closed ! Sending reply ...");
-	    reply({ msg : "Ok abort done !", x : 3.14159 });	   
+	    console.log("server: abort done and com port closed! Sending reply...");
+	    reply({ msg : "Ok abort done!", x : 3.14159 });	   
 	}); 
     },
 
@@ -43,17 +43,17 @@ var mod_pack={
 	var connection = this;
 
 	if(auto_expo_on==true){
-	    console.log("AUTO_EXPO: Already Running!!!");
-	    reply({ msg : "Auto-expo already running!! Stop first !", x : 3.14159 });
+	    console.log("server: auto expo already Running!!!");
+	    reply({ msg : "server: auto expo already Running. Stop first!", x : 3.14159 });
 	    return;
 	}else{
 	    
 	    auto_expo_on=true;
-	    reply({ msg : "Ok starting !", x : 3.14159 });
+	    reply({ msg : "Ok starting!", x : 3.14159 });
 
-	    console.log("AUTO_EXPO: Starting!!!");
+	    console.log("server: auto-expo starting!");
 	    schedule.start_auto_expo(msg.data, wss, connection, function (error){
-		console.log("Auto expo terminated ! error is " + error);
+		console.log("server: auto-expo terminated with error. Error is " + error);
 		auto_expo_on=false;
 	    });
 	}
@@ -63,14 +63,14 @@ var mod_pack={
 
 	
 	schedule.stop_auto_expo(function (){
-	    console.log("Stopped auto expos ! Sending reply ...");
+	    console.log("server: stopped auto expos! Sending reply ...");
 	    reply({ msg : "Ok stopping !", x : 3.14159 });	   
 	}); 
     },
     
     client : function(msg, reply){
 
-	console.log("CLIENT WS command : strating exposure!");
+	console.log("server: client ws command says it's strating exposure!");
 	
 	var connection = this;
 	var msgjson=msg.data;
@@ -103,7 +103,7 @@ console.log("WS server: handler pack installed OK!");
 
 wss.on("client_event", function(evt){
     if(evt.type=="join"){
-	db_obs.last_entry(function(data){
+	db_obs.last_entry(config.allskycam.collection, function(data){
 	    evt.client.send(data.whoami, data); /// Sends the string to the client.
 	});
 	
@@ -120,5 +120,3 @@ wss.on("client_message", function(evt){ //Event sent on each client's incoming m
 server.listen(config.ws.port, function(){   /// Same port as client side.
     console.log((new Date()) + ': Server is listening on port '+config.ws.port);
 });
-
-//console.log("WS server finished exec OK!");
