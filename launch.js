@@ -1,23 +1,21 @@
-
-
 /**
- * @file   jallsky.12.js
+ * @file   launch.js
  * @author Pierre Sprimont and Davide Ricci (davide.ricci82@gmail.com)
- * @date   Thu Dec 14 11:07:20 2017
+ * @date   2017-12-31
  *
- * @brief  AllSky 340M Camera driver
+ * @brief  AllSky 340M Camera handlers.
  *
  *
  */
 
 "use strict";
 
-var julian = require("julian");     /// Julian Date conversion.
+var julian = require("julian");      /// Julian Date conversion.
 var fs=require("fs");                /// File stream for node-fits.
 
 var fits = require('../node-fits/build/Release/fits'); /// Manages fits files.
 var config= require('./config.json');   /// Configuration file.
-var allsky_mod=require("./allsky_drv.js");
+var allsky_mod=require("./jallsky.js"); /// Camera driver
 
 (function(){
 

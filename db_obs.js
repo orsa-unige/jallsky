@@ -1,9 +1,7 @@
-
-
 /**
  * @file   db_obs.js
  * @author Davide Ricci (davide.ricci82@gmail.com)
- * @date   Sat Apr 22 02:38:21 2017
+ * @date   2017-31-12
  *
  * @brief  Fills and reads a database based on mongodb collections.
  *
