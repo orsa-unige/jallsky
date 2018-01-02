@@ -59,7 +59,6 @@ var mod_pack={
     },
 
     stop_auto_expo : function(msg, reply){
-
 	
 	schedule.stop_auto_expo(function (){
 	    console.log("server: stopped auto expos! Sending reply ...");
@@ -69,7 +68,7 @@ var mod_pack={
     
     client : function(msg, reply){
 
-	console.log("server: client ws command says it's strating exposure!");
+	console.log("server: client ws command says it's starting exposure!");
 	
 	var connection = this;
 	var msgjson=msg.data;

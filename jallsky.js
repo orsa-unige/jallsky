@@ -19,10 +19,10 @@ class allsky{
 
     constructor(options){
 	var sp_options={
-	    baudRate : config.camera.baudrate,  /// 115200 (, 230400, 460800),
+	    baudRate : config.allskycam.baudrate,  /// 115200 (, 230400, 460800),
 	    autoOpen : false
 	};
-	var sp_dev=config.camera.device;        /// /dev/ttyUSB0
+	var sp_dev=config.allskycam.device;        /// /dev/ttyUSB0
 
 	if(options!==undefined){
 	    if(options.baudrate!==undefined) sp_options.baudRate = options.baudrate;

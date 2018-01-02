@@ -14,7 +14,7 @@ var config = require('./config.json'); /// Configuration file
 var jall = require('./launch.js');     /// Handlers
 var db_obs= require('./db_obs.js');    /// DB functions
 
-//var meteo= require('../jmeteo/server.js');    /// DB functions
+var meteo= require('../jmeteo/meteo-data.js');    /// DB functions
 
 (function(params){
 
@@ -24,23 +24,23 @@ var db_obs= require('./db_obs.js');    /// DB functions
     var auto_expo=false;
     var auto_expo_done_cb=undefined;
 
-    function auto_expo_done(){
+    // function auto_expo_done(){
 
-    }
+    // }
 
     function do_exposure(params, ws_server, ws, cb){
 	jall.launch_exposure(params, ws_server, ws)
 	    .then(function(){
-		console.log("schedule: launch expo done OK!");
+		console.log("schedule: launch exposure done OK!");
 		db_obs.enter(params, config.allskycam.collection, function(){
 		    cb(null, "schedule: database enter OK!");
 		});
-
-//                meteo.realtime();
+                
+                meteo.realtime();
 
             })
 	    .catch(function(err) {
-		var error="schedule error : launch exposure : " + err;
+		var error="schedule: launch exposure error =  " + err;
 		console.log(error);
 		cb(error);
 
@@ -49,7 +49,7 @@ var db_obs= require('./db_obs.js');    /// DB functions
     };
 
     exports.launch = function(params, ws_server, ws, cb){
-	console.log("SCHEDULE: launch exposure!");
+	console.log("schedule: launch exposure!");
 	do_exposure(params, ws_server, ws, cb);
     };
 
@@ -67,16 +67,16 @@ var db_obs= require('./db_obs.js');    /// DB functions
 	function exposure_done_cb(fail, ok){
 
 	    if(fail==null){
-		console.log("AUTO_EXPO : Begin exposure " + nexpo);
+		console.log("auto expo: Begin exposure" + nexpo);
 		if(auto_expo==true)
 		    do_exposure(params, ws_server, ws, exposure_done_cb);
 		else{ //stop received!
-		    cb(null, "AUTO EXPO : terminated !");
+		    cb(null, "auto expo: Terminated!");
 		    if(auto_expo_done_cb!==undefined)
-			auto_expo_done_cb("AUTO EXPO terminated!");
+			auto_expo_done_cb("auto expo terminated!");
 		}
 	    }else{
-		console.log("AUTO_EXPO : Error in exposure, aborting ! nexpo= " + nexpo + " error : " + fail);
+		console.log("auto expo: Error in exposure, aborting! nexpo= " + nexpo + " error : " + fail);
 		auto_expo=false;
 		cb(fail);
 	    }
