@@ -84,16 +84,11 @@ npm -f install
 Clone the external `ws_protocol_layer` and `node-fits` repositories used by this project.
 
 ```bash
-https://github.com/Nunkiii/ws_protocol_layer.git
-```
-Enter in its directory and then:
-
-```bash
-npm -f install
+npm install Nunkiii/ws_protocol_layer
 ```
 
 ```bash
-https://github.com/Nunkiii/node-fits.git
+git clone https://github.com/Nunkiii/node-fits.git
 ```
 
 `node-fits` has to be built. In its directory:
