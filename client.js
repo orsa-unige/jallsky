@@ -145,7 +145,7 @@ function update_image(obj){
 
     /// Changing min max values and color cuts.
     $("#mincuts").text(obj.histo.start.toFixed(0));
-    $("#maxcuts").text(obj.histo.step*obj.histo.data.length);
+    $("#maxcuts").text(obj.histo.step*obj.histo.data.length.toFixed(0));
 
     $("#maxist").text(Math.max(...obj.histo.data));
     // $("#minist").text(Math.min(...obj.histo.data))
@@ -180,14 +180,18 @@ function update_image(obj){
 	console.log("called");
 
 	var dataset=obj.histo.data;
+        var dnumber=dataset.length
+        
 	dataset = dataset.map(x => x+1); /// Avoids logscale issues.
 
+        
+        
 	var dom=d3.extent(dataset);
 
 	var hscale = d3.select("#log").property("checked")
 	        ? hlog.domain(dom) : hlin.domain(dom);
 
-	var cscale = clin.domain([0,dataset.length-1]);
+	var cscale = clin.domain([0,dnumber-1]);
 
 	// var aspect = w.max / h.max,
 	// 	chart = d3.select('#chart');
@@ -208,9 +212,9 @@ function update_image(obj){
 	    .append("rect");
 
 	elem
-    	    .attr("x", (d,i) => i * (w.max / dataset.length) )
+    	    .attr("x", (d,i) => i * (w.max / dnumber) )
 	    .attr("y", d =>  h.max-hscale(d)+1 )
-	    .attr("width", w.max / dataset.length )
+	    .attr("width", w.max / dnumber )
 	    .attr("height", d => hscale(d)+1 )
 	    .attr("fill", (d,i) => cscale(i) );
 
@@ -227,9 +231,9 @@ function update_image(obj){
 	    .append("text");
 
 	labs
-	    .text( (d,i) => i % (dataset.length/10) == 4  ? d : null )
+	    .text( (d,i) => i % (dnumber/10) == 4  ? d : null )
 	    .attr("text-anchor", "middle")
-    	    .attr("x", (d,i) => i * (w.max / dataset.length) )
+    	    .attr("x", (d,i) => i * (w.max / dnumber) )
 	    .attr("y", d =>  h.max-hscale(d) - 16  )
 	    .attr("font-family", "sans-serif")
 	    .attr("font-size", "1.3em")
@@ -254,16 +258,20 @@ ws.install_mod({
     image_data_func : function(msg){
         switch(msg.data.which_progress) {
         case "exposure":
+	    $("#exposure_label")
+                .text("Exposure:")
 	    $("#exposure_progress")
 	        .css('width', msg.data.percent+'%')
 	        .attr('aria-valuenow', msg.data.percent);
 	    $("#exposure_output").val(msg.data.percent);
             break;
         case "transfer":
-	    $("#transfer_progress")
+	    $("#exposure_label")
+                .text("Transfer:")
+	    $("#exposure_progress")
 	        .css('width', msg.data.percent+'%')
 	        .attr('aria-valuenow', msg.data.percent);
-	    $("#transfer_output").val(msg.data.percent);
+	    $("#exposure_output").val(msg.data.percent);
             break;
         default:
 //            console.log(msg.data.percent);
