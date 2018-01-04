@@ -79,13 +79,11 @@ Enter in the jallsky directory and then:
 npm -f install 
 ```
 
-## Install external repositories: 
+It will install all necessary npm modules as well as the  external `Nunkiii/ws_protocol_layer` module.
 
-Clone the external `ws_protocol_layer` and `node-fits` repositories used by this project.
+## Install other external repositories: 
 
-```bash
-npm install Nunkiii/ws_protocol_layer
-```
+Clone the external `node-fits` repository.
 
 ```bash
 git clone https://github.com/Nunkiii/node-fits.git
