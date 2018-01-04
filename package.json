@@ -12,7 +12,8 @@
     "mongodb": "^2.2.26",
     "popper.js": "^1.13.0",
     "serialport": "^6.0.4",
-    "websocket": "^1.0.25"
+    "websocket": "^1.0.25",
+    "ws_protocol_layer": "github:Nunkiii/ws_protocol_layer"
   },
   "devDependencies": {},
   "scripts": {
