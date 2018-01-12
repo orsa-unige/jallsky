@@ -24,10 +24,6 @@ var meteo= require('../jmeteo/meteo-data.js');    /// DB functions
     var auto_expo=false;
     var auto_expo_done_cb=undefined;
 
-    // function auto_expo_done(){
-
-    // }
-
     function do_exposure(params, ws_server, ws, cb){
 	jall.launch_exposure(params, ws_server, ws)
 	    .then(function(){
@@ -55,6 +51,7 @@ var meteo= require('../jmeteo/meteo-data.js');    /// DB functions
 
     exports.abort = function(params,cb){
 	jall.cam.abort().then(function(){
+	    auto_expo=false;
 	    jall.cam.close().then(cb);
 	});
     };
