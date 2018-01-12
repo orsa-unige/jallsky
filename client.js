@@ -46,7 +46,7 @@ $("#start").on("click",function(event){
 
     var normaldata=$("form").serializeArray(); /// Takes all the form parameters.
 
-    var compactdata = { };                   /// Compacts them in a "key,value" pair:
+    var compactdata = {};                    /// Compacts them in a "key,value" pair:
     $.each(normaldata, function() {          /// on each element...
 	compactdata[this.name] = this.value; /// the name is the value.
     });
@@ -66,6 +66,7 @@ $("#abort").on("click",function(event){
     console.log(JSON.stringify(compactdata,undefined,2));
     wsc.query("abort", compactdata, function(reply_data){
 	console.log("Abort done! you can take another image ! example data back : " + JSON.stringify(reply_data) );
+	footer_output(reply_data);
     });
 
 });
@@ -89,6 +90,7 @@ $("#auto").on("click",function(event){
 //    console.log(JSON.stringify(compactdata,undefined,2));
     wsc.query("start_auto_expo", compactdata, function(reply_data){
 	console.log("Automatic exposures started! Take esposures until stop : ")// + JSON.stringify(reply_data) );
+	footer_output(reply_data);
     });
 });
 
@@ -97,6 +99,8 @@ $("#stop").on("click",function(event){
 //    console.log(JSON.stringify(compactdata,undefined,2));
     wsc.query("stop_auto_expo", compactdata, function(reply_data){
 	console.log("Stopped taking automatic exposures : ")// + JSON.stringify(reply_data) );
+	footer_output(reply_data);
+
     });
 });
 
@@ -248,7 +252,7 @@ function update_image(obj){
 ws.install_mod({
 
     get_bytes : function(msg){ ///,reply){
-
+	footer_output(msg);
     },
 
     image_data_func : function(msg){
@@ -266,32 +270,34 @@ ws.install_mod({
 	    $("#transfer_output").val(msg.data.percent);
             break;
         default:
-//            console.log(msg.data.percent);
+	    footer_output(msg);
         };
     },
 
     database : function(msg){
+	footer_output(msg);
 	update_image(msg.data);
     },
 
     create_png : function(msg){
+	footer_output(msg);
 	update_image(msg.data);
     },
 
     client : function(msg){
-//	console.log("Received CLIENT command : unhandled ! implement here :) data is " + JSON.stringify(msg.data));
+	footer_output(msg);
     },
 
     abort : function(msg){
-//	console.log("Received ABORT command : unhandled ! implement here :) data is " + JSON.stringify(msg.data));
+	footer_output(msg);
     },
 
     start_auto_expo : function(msg){
-//	console.log("Received AUTO command : unhandled ! implement here :) data is " + JSON.stringify(msg.data));
+	footer_output(msg);
     },
 
     stop_auto_expo : function(msg){
-//	console.log("Received STOP command : unhandled ! implement here :) data is " + JSON.stringify(msg.data));
+	footer_output(msg);
     }
 
 });
@@ -300,5 +306,11 @@ ws.install_mod({
 wsc.connect()
     .then(function(){})
     .catch(function(e){
+	footer_output("WS connect error : " + e);
 	console.log("WS connect error : " + e);
     });
+
+
+function footer_output(msg){
+    $("footer output").prepend(JSON.stringify(msg)+"<br>");
+}

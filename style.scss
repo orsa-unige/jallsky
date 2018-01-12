@@ -5,6 +5,20 @@ main {
     @extend .container-fluid;
 }
 
+
+footer output{
+    @extend .navbar;
+    display:block;
+    overflow:hidden;
+    // padding:3px;
+    // margin-top:20px;
+    background-color:#333;
+    color:#00ff2c;
+    height:7em;
+    font-family:"Monospace";
+}
+
+
 article {
     @extend .row;
 }
@@ -45,15 +59,15 @@ label#linlog{
     @extend .custom-checkbox;
 
     input[type="checkbox"] {
-	@extend .custom-control-input;
+	// @extend .custom-control-input;
     }
 
     em {
-	@extend .custom-control-indicator;
+	// @extend .custom-control-indicator;
     }
 
     span {
-	@extend .custom-control-description;
+	// @extend .custom-control-description;
     }
 
 }
@@ -76,11 +90,11 @@ form {
 	    input, select, button{
 		@extend .form-control;
 	    }
-	    
+
 	    input, button {
 		@extend .mt-1;
 	    }
-	    
+
 	}
     }
 
@@ -89,14 +103,14 @@ form {
 	@extend .btn-block;
 
     }
-    
+
 }
 
 
 var {
     #minist, #maxist{
 	border-top:0.1em solid black
-    }    
+    }
 }
 
 #histogram {
@@ -105,7 +119,7 @@ var {
 	padding:0;
 	margin:0;
     }
-    
+
     li{
 	margin-top:200px;
 	background-color:#0275d8; /*steelblue*/

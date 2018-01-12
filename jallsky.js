@@ -122,16 +122,12 @@ class allsky{
 
 	return new Promise(function(ok, fail){
 	    sky.sp.write(buffer, function(){
-
 		sky.sp.drain(function(err){
-
 		    if(err){
 			console.log("write FAIL!: " + err);
 			fail(err);
 		    }
-		    else{
-			ok();
-		    }
+		    else ok();
 		});
 	    });
 	});
@@ -440,17 +436,18 @@ class allsky{
 		    }
 
 		}
+
 		else{
 		    if(progress_callback!==undefined){
                         elapsed_time+=E_in_progress;
-                        // console.log("Elapsed: "+elapsed_time+" Chopped:"+chopped_exptime+" Original"+params.exptime*1000);
-			var now=new Date();
+
+			// var now=new Date();
 		        progress_callback({
                             which_progress: "exposure",
 	    		    exposure_time : chopped_exptime,
 	    		    elapsed_time  : elapsed_time,
-	    		    percent       : ((elapsed_time/chopped_exptime)*100).toFixed(0),
-			    percent2       : ( (now-start_time)/1000.0/params.exptime ).toFixed(0)
+	    		    percent       : ((elapsed_time/chopped_exptime)*100).toFixed(0)// ,
+			    // percent2       : ( (now-start_time)/1000.0/params.exptime ).toFixed(0)
 	    		});
                     }
 		}
@@ -462,8 +459,8 @@ class allsky{
                             which_progress: "exposure",
 	    		    exposure_time : chopped_exptime,
 	    		    elapsed_time  : elapsed_time,
-	    		    percent       : 100,
-			    percent2       : 100
+	    		    percent       : 100// ,
+			    // percent2       : 100
 	    		});
                     }
 		    
@@ -532,8 +529,8 @@ class allsky{
 	    };
 
 	    sky.write(com).then(function(){
-		start_time=new Date();
-		//console.log("Comamnd TAKEIMAGE sent ok!");
+		// start_time=new Date();
+		// console.log("Comamnd TAKEIMAGE sent ok!");
 	    }).catch(fail);
 	});
     }
