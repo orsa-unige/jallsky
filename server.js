@@ -11,7 +11,7 @@
 
 "use strict";
 
-var ws_mod=require("../ws_protocol_layer/lib/node/ws_server.js");
+var ws_mod=require("ws_protocol_layer/lib/node/ws_server.js");
 
 var http = require('http');    
 
