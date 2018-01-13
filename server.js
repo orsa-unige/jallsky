@@ -11,9 +11,8 @@
 
 "use strict";
 
-var ws_mod=require("ws_protocol_layer/lib/node/ws_server.js");
-
 var http = require('http');    
+var ws_mod=require("ws_protocol_layer/lib/node/ws_server.js");
 
 var config= require('./config.json');   /// Configuration file.
 var db_obs= require('./db_obs.js');     /// DB functions.
@@ -45,8 +44,8 @@ var mod_pack={
 	    console.log("server: auto expo already Running!!!");
 	    reply({ msg : "server: auto expo already Running. Stop first!", x : 3.14159 });
 	    return;
-	}else{
-	    
+
+	}else{	    
 	    auto_expo_on=true;
 	    reply({ msg : "Ok starting!", x : 3.14159 });
 

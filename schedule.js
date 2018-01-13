@@ -51,7 +51,6 @@ var meteo= require('../jmeteo/meteo-data.js');    /// DB functions
 
     exports.abort = function(params,cb){
 	jall.cam.abort().then(function(){
-	    auto_expo=false;
 	    jall.cam.close().then(cb);
 	});
     };
