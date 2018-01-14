@@ -48,23 +48,28 @@ ws.install_mod({
 });
 
 
-var today =  new Date();
+// var today =  new Date();
 
-var tomorrow = new Date(today);
-tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+// var tomorrow = new Date(today);
+// tomorrow.setUTCDate(tomorrow.getUTCDate() + 1)
 
-// get today's sunlight times
-var times0 = SunCalc.getTimes(today,44,9);
-var times1 = SunCalc.getTimes(tomorrow,44,9);
+// // get today's sunlight times for London
+// var times0 = SunCalc.getTimes(today,44,9);
+// var times1 = SunCalc.getTimes(tomorrow,44,9);
 
-var sunset = new Date(times0.sunset);
-var sunrise = new Date(times1.sunrise);
+// console.log("today    : "+today.toISOString())
+// console.log("tomor    : "+tomorrow.toISOString())
 
-console.log("today    : "+today.toISOString());
-console.log("tomor    : "+tomorrow.toISOString());
+// console.log("sunset   : "+times0.sunset.toISOString())
+// console.log("sunrise  : "+times1.sunrise.toISOString())
 
-console.log("sunset   : "+sunset.toISOString());
-console.log("sunrise  : "+sunrise.toISOString());
+// var sunset = new Date(today);
+//     sunset.setUTCSeconds(sunset.getUTCSeconds() + 1)
+
+
+// var sunrise = new Date(today);
+//     sunrise.setUTCSeconds(sunrise.getUTCSeconds() + 2)
+
 
 var rule = new schedule.RecurrenceRule();
 rule.second = 10;
@@ -74,20 +79,19 @@ var j = schedule.scheduleJob(rule, function(){
 
     console.log("");
     console.log("It's noon! Time to prepare triggers:");
+    var today =  new Date();
 
-    // var today =  new Date();
+    console.log(today.toISOString());
 
-    // console.log(today.toISOString());
-
-    // console.log("Sunset will be:");
-    // var sunset = new Date(today);
-    // sunset.setUTCMinutes(sunset.getUTCMinutes() + 1);
-    // console.log(sunset.toISOString());
+    console.log("Sunset will be:");
+    var sunset = new Date(today);
+    sunset.setUTCMinutes(sunset.getUTCMinutes() + 1);
+    console.log(sunset.toISOString());
         
-    // console.log("Sunrise will be:");
-    // var sunrise = new Date(today);
-    // sunrise.setUTCMinutes(sunrise.getUTCMinutes() + 3);
-    // console.log(sunrise.toISOString());
+    console.log("Sunrise will be:");
+    var sunrise = new Date(today);
+    sunrise.setUTCMinutes(sunrise.getUTCMinutes() + 3);
+    console.log(sunrise.toISOString());
 
     var compactdata = {};
     
@@ -97,54 +101,48 @@ var j = schedule.scheduleJob(rule, function(){
 
         compactdata={
             imagetyp: "light",
-            exptime: 10,
+            exptime: 2,
             nexp: 1,
-            frametyp: "full",
+            frametyp: "custom",
             size: 120,
             x_start: 260,
             y_start: 180
         };
         
-        wsc.query("stop_auto_expo", {}, function(reply_data){
-	    console.log("Stopping! Take esposures until stop");
-
-            wsc.query("start_auto_expo", compactdata, function(reply_data){
-	        console.log("Sunset, exposures stopping! Take esposures until stop");
-            });
+        // wsc.query("stop_auto_expo", {}, function(reply_data){
+	//     console.log("Stopping! Take esposures until stop.");
 
         });
+            
+        wsc.query("start_auto_expo", compactdata, function(reply_data){
+	    console.log("Sunset! Taking longer exposures.");
+        });
 
-        // wsc.query("start_auto_expo", compactdata, function(reply_data){
-	//     console.log("Sunset exposures started! Take esposures until stop");
-        // });
-
+            
         
     });
     
     var alba = schedule.scheduleJob(sunrise, function(firedate){
-        console.log("It's sunrise");
+        console.log("It's sunrise!");
         console.log(firedate);
-
-        // compactdata={};
 
         compactdata={
             imagetyp: "light",
-            exptime: 1,
+            exptime: 3,
             nexp: 1,
-            frametyp: "full",
-            size: 120,
-            x_start: 260,
-            y_start: 180
+            frametyp: "full" //,
+            // size: 120,
+            // x_start: 260,
+            // y_start: 180
         };
 
         wsc.query("stop_auto_expo", {}, function(reply_data){
-	    console.log("Sunrise, exposures stopping! Take esposures until stop");
-
-            wsc.query("start_auto_expo", compactdata, function(reply_data){
-	        console.log("Sunrise, exposures stopping! Take esposures until stop");
-            });
-
+	    console.log("Stopping! Take esposures until stop.");
         });
+
+        // wsc.query("start_auto_expo", compactdata, function(reply_data){
+	//     console.log("Sunrise! Taking shorter exposure.");
+        // });
         
     });
 
