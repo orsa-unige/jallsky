@@ -60,7 +60,7 @@ var db = new mongo.Db(config.mongo.database, new mongo.Server(config.mongo.ip, c
 		doc._id=null; /// Reset to avoid error for duplicate entry. Infame maledetto!
 	    	collection.insert(doc, function() {
 	    	    console.log("db: inserting");
-	    	    cb(doc);
+                    cb(doc);
 	    	    db.close(function() {
 		    });
 	    	});
@@ -86,6 +86,6 @@ var db = new mongo.Db(config.mongo.database, new mongo.Server(config.mongo.ip, c
 		});
 	});
     };
-    
 
-}).call()
+
+}).call();

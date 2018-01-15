@@ -10,12 +10,9 @@
 
 "use strict";
 
-var julian = require("julian");      /// Julian Date conversion.
-var fs=require("fs");                /// File stream for node-fits.
-
-var fits = require('../node-fits/build/Release/fits'); /// Manages fits files.
-var config= require('./config.json');   /// Configuration file.
+var config=require("./config.json"); /// Configuration file.
 var allsky_mod=require("./jallsky.js"); /// Camera driver
+var write_image=require("./write_image.js"); /// Creating png thumb and fits files
 
 (function(){
 
@@ -54,125 +51,6 @@ var allsky_mod=require("./jallsky.js"); /// Camera driver
      *
      * @return
      */
-    function create_png(params){
-
-        var pngname  = config.png.dir+params.dateobs+".png";
-
-        return new Promise(function(ok, fail){
-
-            /// The file is automatically opened (for reading) if the
-            /// file name is specified on constructor.
-            var f = new fits.file(params.fitsname); 
-
-            f.get_headers(function(error, headers){
-
-                if(error){
-                    fail("Bad things happened : " + error);
-                }else{
-
-                    f.read_image_hdu(function(error, image){
-
-                        if(error)
-                            fail("Bad things happened while reading image hdu : " + error);
-                        else{
-
-                            if(image){
-
-                                //for (var ip in image) console.log("IP : " + ip);
-
-                                console.log("Image size : " + image.width() + " X " + image.height());
-
-                                var colormap=config.png.colormap;
-                                ///R  ///G  ///B  ///A  ///level: 0=min,1=max
-                                // [
-                                // [0.0, 0.0, 0.0, 1.0, 0.0],
-                                // [0.4, 0.4, 0.4, 1.0, 0.8],
-                                // [0.8, 0.8, 0.8, 1.0, 0.9],
-                                // [1.0, 1.0, 1.0, 1.0, 1.0]
-                                // ];
-
-                                //nbins:50
-                                image.histogram({}, function(error, histo){
-                                    if(error)
-                                        fail("Histo error : " + error);
-                                    else{
-                                        params.histo=histo;
-
-                                        var cuts=config.png.cuts; /// [11000,40000] for 25s
-
-                                        image.set_colormap(colormap);
-                                        image.set_cuts(cuts);
-
-                                        params.pngname=pngname;
-
-                                        var out = fs.createWriteStream(pngname);
-                                        out.write(image.tile( { tile_coord :  [0,0], zoom :  0, tile_size : [image.width(),image.height()], type : "png" }));
-                                        out.end();
-
-                                        ok();
-                                    }
-                                });
-                            }else fail("No image returned and no error ?");
-                        }
-                    });
-                }
-            }); ///get_headers
-        });//Promise
-    }
-
-    /**
-     *
-     *
-     * @param data
-     * @param params
-     * @param cb
-     *
-     * @return
-     */
-    async function write_fits(data,params){
-
-        var now      = new Date(); /// Time stamp to be used for file names, DATE-OBS and JD
-        var dateobs  = now.toISOString().slice(0,-5);  /// string
-        var jd       = parseFloat(julian(now));        /// double
-
-        var fitsname = config.fits.dir+dateobs+".fits";
-
-        var fifi     = new fits.file(fitsname);
-        var M        = new fits.mat_ushort;
-
-        M.set_data(params.width,params.height,data);
-        fifi.file_name;
-        fifi.write_image_hdu(M);
-
-        var h=require(config.header.template); /// Loading json containing the header template
-
-        /// Filling variable header keys.
-        h.find(x => x.key === 'DATE-OBS').value = dateobs;
-        h.find(x => x.key === 'JD'      ).value = jd;
-        h.find(x => x.key === 'EXPTIME' ).value = params.exptime;
-        h.find(x => x.key === 'IMAGETYP').value = params.imagetyp;
-        h.find(x => x.key === 'FRAMETYP').value = params.frametyp;
-        h.find(x => x.key === 'BINNING' ).value = params.frametyp == 'binned' ? parseInt(2) : parseInt(1);
-        h.find(x => x.key === 'SUBFRAME').value = params.frametyp == 'custom'
-            ? "["+[params.x_start, params.y_start, params.size].toString()+"]" : '';
-
-        /// Filling fixed header keys.
-        fifi.set_header_key(h, err => {if(err!==undefined) console.log("Error setting fits header: "+err);});
-
-        var post  = {jd:jd, dateobs:dateobs, exptime:params.exptime, fitsname:fitsname };
-
-        Object.assign(params, post);
-
-    }
-
-    /**
-     *
-     *
-     * @param params
-     * @param cb
-     *
-     * @return
-     */
     async function launch_exposure(params, ws_server, ws){
 
 	console.log("launch_exposure: BEGIN, opening cam...");
@@ -194,14 +72,15 @@ var allsky_mod=require("./jallsky.js"); /// Camera driver
             });
 
             console.log("launch_exposure: Got image!");
-            await write_fits(image_data, params);
-            await create_png(params);
+            await write_image.fits(image_data, params);
+            await write_image.png(params);
+            await write_image.histo(params);
 
             ws_server.broadcast("create_png",params);  /// To all connected peers!
 
         }
-        catch( error){
-            console.log("launch_exposure: Error Got image or image aborted !");
+        catch(error){
+            console.log("launch_exposure: Error Got image or image aborted: "+error);
         }
 
         await cam.close_shutter();

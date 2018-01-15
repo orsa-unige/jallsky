@@ -12,8 +12,8 @@
       "comment" : "AllSky Camera"},
 
     { "key"     : "INSTRUME",
-      "value"   : "SBIG-Allsky340",
-      "comment" : "AllSky Camera"},
+      "value"   : "SBIG-Allsky340M",
+      "comment" : "AllSky Camera model"},
 
     { "key"     : "OBJECT",
       "value"   : "Night sky",
@@ -48,7 +48,7 @@
       "comment" : "Author of the observation"},
 
     { "key"     : "IMAGETYP",
-      "value"   : "",
+      "value"   : null,
       "comment" : "Light; Dark; Light-Dark (only binning 2x2)"},
 
     { "key"     : "BINNING",
@@ -56,20 +56,20 @@
       "comment" : "Binning factor"},
 
     { "key"     : "FRAMETYP",
-      "value"   : "",
+      "value"   : null,
       "comment" : "full=[640,480] crop=[512,480] binned=[320,240]"},
 
     { "key"     : "SUBFRAME",
-      "value"   : "",
+      "value"   : null,
       "comment" : "custom=[x_start,y_start,size]. Size < 127px"},
 
     { "key"     : "DATE-OBS",
-      "value"   : "",
-      "comment" : "Obs. date from laptop, synchronized with NTP"},
+      "value"   : null,
+      "comment" : "Obs. date UT, synchronized with pc's NTP"},
     
     { "key"     : "JD",
       "value"   : null,
-      "comment" : "Julian Date from laptop, synchronized with NTP"},
+      "comment" : "Julian Date UT, synchronized with pc's NTP"},
 
     { "key"     : "EXPTIME",
       "value"   : null,

@@ -32,7 +32,7 @@ var meteo= require('../jmeteo/meteo-data.js');    /// DB functions
 		    cb(null, "schedule: database enter OK!");
 		});
                 
-                meteo.realtime();
+//                meteo.realtime();
 
             })
 	    .catch(function(err) {

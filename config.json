@@ -33,18 +33,18 @@
 	"device"      : "/dev/ttyUSB0",
 	"baudrate"    : 115200,
         "collection"  : "allskycam",
+        "header" : {
+	    "template"    : "./header_template.json",
+	    "description" : "Address of the header template."
+        },
 	"description" : "Parameters for SBIG 340M AllSky Camera connection and database collection."
+        
     },
 
     "meteo_station" : {
 	"device"      : "/dev/remserial1",
         "collection"  : "meteo_station",
 	"description" : "Parameters for Vantage Davis Pro connection and database collection."
-    },
-
-    "header" : {
-	"template"    : "./header_template.json",
-	"description" : "Address of the header template."
     }
 
 }
