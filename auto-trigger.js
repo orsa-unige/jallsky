@@ -7,7 +7,7 @@
 
 
 var schedule = require('node-schedule');
-// var SunCalc = require('suncalc');
+var SunCalc = require('suncalc');
 var http = require('http');
 
 var ws_mod=require("ws_protocol_layer/lib/node/ws_server.js");
@@ -105,18 +105,18 @@ var j = schedule.scheduleJob(rule, function(){
             y_start: 180
         };
         
-        wsc.query("stop_auto_expo", {}, function(reply_data){
-	    console.log("Stopping! Take esposures until stop");
+        // wsc.query("stop_auto_expo", {}, function(reply_data){
+	//     console.log("Stopping! Take esposures until stop");
 
-            wsc.query("start_auto_expo", compactdata, function(reply_data){
-	        console.log("Sunset, exposures stopping! Take esposures until stop");
-            });
+        //     wsc.query("start_auto_expo", compactdata, function(reply_data){
+	//         console.log("Sunset, exposures stopping! Take esposures until stop");
+        //     });
 
-        });
-
-        // wsc.query("start_auto_expo", compactdata, function(reply_data){
-	//     console.log("Sunset exposures started! Take esposures until stop");
         // });
+
+        wsc.query("start_auto_expo", compactdata, function(reply_data){
+	    console.log("Sunset exposures started! Take esposures until stop");
+        });
 
         
     });
@@ -140,9 +140,9 @@ var j = schedule.scheduleJob(rule, function(){
         wsc.query("stop_auto_expo", {}, function(reply_data){
 	    console.log("Sunrise, exposures stopping! Take esposures until stop");
 
-            wsc.query("start_auto_expo", compactdata, function(reply_data){
-	        console.log("Sunrise, exposures stopping! Take esposures until stop");
-            });
+            // wsc.query("start_auto_expo", compactdata, function(reply_data){
+	    //     console.log("Sunrise, exposures stopping! Take esposures until stop");
+            // });
 
         });
         
