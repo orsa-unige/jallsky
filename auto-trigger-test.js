@@ -19,6 +19,10 @@ var out_ws=new ws_mod.outbound_server();
 
 out_ws.install_mod({
 
+    image_data_func : function(msg){
+	console.log(msg.data.percent);
+    },
+
     database : function(msg){
 	
     },

@@ -13,25 +13,16 @@ var http = require('http');
 var ws_mod=require("ws_protocol_layer/lib/node/ws_server.js");
 var config= require('./config.json');   /// Configuration file.
 
-// var ws=new ws_web.server();
+//Creation of an outbound server. It is holding all the clients sharing the same set of handlers.
 
-var ws=new ws_mod.outbound_server();
+var out_ws=new ws_mod.outbound_server();
 
-var wsc=ws.create_client({
-    path : "",             /// need a path for accessing our websocket server?
-    port : config.ws.port, /// defaults to same as web server we are connected to
-    host : config.ws.ip    /// defaults to same as web server host
-});
+out_ws.install_mod({
 
-wsc.on("error",function(e){
-    console.log("WS Error=" +e + " DBG: " + e);
-});
-
-wsc.on("open", function(){
-    console.log("ws opened to " +  wsc.peer.url);
-});
-
-ws.install_mod({
+    image_data_func : function(msg){
+        if (msg.data.percent == 100) 
+	    console.log("transfer of "+msg.data.dateobs+" completed.");
+    },
 
     database : function(msg){
 	
@@ -48,6 +39,18 @@ ws.install_mod({
 });
 
 
+// client.on("error",function(e){
+//     console.log("WS Error=" +e + " DBG: " + e);
+// });
+
+// client.on("open", function(){
+//     console.log("ws opened to " +  client.peer.url);
+// });
+
+
+// var rule = new schedule.RecurrenceRule();
+// rule.second = 10;
+
 var today =  new Date();
 
 var tomorrow = new Date(today);
@@ -58,92 +61,46 @@ var times0 = SunCalc.getTimes(today,44,9);
 var times1 = SunCalc.getTimes(tomorrow,44,9);
 
 var sunset = new Date(times0.sunset);
+    sunset.setUTCMinutes(sunset.getUTCMinutes() + 34);
 var sunrise = new Date(times1.sunrise);
 
-console.log("today    : "+today.toISOString());
-console.log("tomor    : "+tomorrow.toISOString());
-
-console.log("sunset   : "+sunset.toISOString());
-console.log("sunrise  : "+sunrise.toISOString());
-
-var rule = new schedule.RecurrenceRule();
-rule.second = 10;
 console.log("Wait at least 1 minute for noon!");
+console.log("Sunset will be : "+sunset.toISOString());        
+console.log("Sunrise will be: "+sunrise.toISOString());
 
-var j = schedule.scheduleJob(rule, function(){
+var j = schedule.scheduleJob('50 17 * * *', function(){
 
     console.log("");
     console.log("It's noon! Time to prepare triggers:");
-
     // var today =  new Date();
 
-    // console.log(today.toISOString());
-
-    // console.log("Sunset will be:");
-    // var sunset = new Date(today);
-    // sunset.setUTCMinutes(sunset.getUTCMinutes() + 1);
-    // console.log(sunset.toISOString());
-        
-    // console.log("Sunrise will be:");
-    // var sunrise = new Date(today);
-    // sunrise.setUTCMinutes(sunrise.getUTCMinutes() + 3);
-    // console.log(sunrise.toISOString());
+    console.log(today.toISOString());
 
     var compactdata = {};
     
     var tramonto = schedule.scheduleJob(sunset, function(firedate){
-        console.log("It's sunset");
-        console.log(firedate);
-
+        console.log("");
+        console.log("It's sunset : "+firedate);
+        
         compactdata={
             imagetyp: "light",
-            exptime: 10,
+            exptime: 12,
             nexp: 1,
-            frametyp: "full",
-            size: 120,
-            x_start: 260,
-            y_start: 180
+            frametyp: "full"
         };
-        
-        // wsc.query("stop_auto_expo", {}, function(reply_data){
-	//     console.log("Stopping! Take esposures until stop");
-
-        //     wsc.query("start_auto_expo", compactdata, function(reply_data){
-	//         console.log("Sunset, exposures stopping! Take esposures until stop");
-        //     });
-
-        // });
-
-        wsc.query("start_auto_expo", compactdata, function(reply_data){
-	    console.log("Sunset exposures started! Take esposures until stop");
+                
+        client.query("start_auto_expo", compactdata, function(reply_data){
+	    console.log("Sunset! Taking longer exposures.");
         });
-
         
     });
-    
+        
     var alba = schedule.scheduleJob(sunrise, function(firedate){
-        console.log("It's sunrise");
-        console.log(firedate);
+        console.log("");
+        console.log("It's sunrise: "+firedate);
 
-        // compactdata={};
-
-        compactdata={
-            imagetyp: "light",
-            exptime: 1,
-            nexp: 1,
-            frametyp: "full",
-            size: 120,
-            x_start: 260,
-            y_start: 180
-        };
-
-        wsc.query("stop_auto_expo", {}, function(reply_data){
-	    console.log("Sunrise, exposures stopping! Take esposures until stop");
-
-            // wsc.query("start_auto_expo", compactdata, function(reply_data){
-	    //     console.log("Sunrise, exposures stopping! Take esposures until stop");
-            // });
-
+        client.query("stop_auto_expo", {}, function(reply_data){
+	    console.log("Stopping! Take esposures until stop.");
         });
         
     });
@@ -152,4 +109,19 @@ var j = schedule.scheduleJob(rule, function(){
     
 });
 
-    
+
+
+try{
+    //Creating a new websocket client. 
+    var client=out_ws.create_client({
+        path : "",             /// need a path for accessing our websocket server?
+        port : config.ws.port, /// defaults to same as web server we are connected to
+        host : config.ws.ip    /// defaults to same as web server host
+    });
+
+client.connect();
+
+}
+catch(error){
+    console.error("Error creating client : " + error);
+}
