@@ -51,29 +51,30 @@ out_ws.install_mod({
 // var rule = new schedule.RecurrenceRule();
 // rule.second = 10;
 
-var today =  new Date();
-
-var tomorrow = new Date(today);
-tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
-
-// get today's sunlight times
-var times0 = SunCalc.getTimes(today,44,9);
-var times1 = SunCalc.getTimes(tomorrow,44,9);
-
-var sunset = new Date(times0.sunset);
-    sunset.setUTCMinutes(sunset.getUTCMinutes() + 34);
-var sunrise = new Date(times1.sunrise);
-
-console.log("Wait at least 1 minute for noon!");
-console.log("Sunset will be : "+sunset.toISOString());        
-console.log("Sunrise will be: "+sunrise.toISOString());
-
-var j = schedule.scheduleJob('50 17 * * *', function(){
+var j = schedule.scheduleJob('32 17 * * *', function(){
 
     console.log("");
     console.log("It's noon! Time to prepare triggers:");
     // var today =  new Date();
 
+
+    var today =  new Date();
+    
+    var tomorrow = new Date(today);
+    tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+
+    // get today's sunlight times
+    var times0 = SunCalc.getTimes(today,44,9);
+    var times1 = SunCalc.getTimes(tomorrow,44,9);
+    
+    var sunset = new Date(times0.sunset);
+    sunset.setUTCMinutes(sunset.getUTCMinutes() + 34);
+    var sunrise = new Date(times1.sunrise);
+    
+    console.log("Wait at least 1 minute for noon!");
+    console.log("Sunset will be : "+sunset.toISOString());        
+    console.log("Sunrise will be: "+sunrise.toISOString());
+    
     console.log(today.toISOString());
 
     var compactdata = {};
