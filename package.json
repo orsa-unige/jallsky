@@ -1,25 +1,23 @@
 {
   "name": "jallsky-test",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A node code for AllSky Cameras",
   "main": "./server.2.js",
-    "dependencies": {
-    "bootstrap": "^4.0.0-beta.3",
+  "dependencies": {
+    "bootstrap": "^4.0.0",
     "d3": "^4.12.2",
-    "jquery": "^3.2.1",
+    "jquery": "^3.3.1",
     "julian": "^0.1.0",
     "mongodb": "^2.2.34",
+    "node-fits": "github:Nunkiii/node-fits",
     "node-schedule": "^1.3.0",
     "popper.js": "^1.13.0",
     "serialport": "^6.0.4",
     "suncalc": "^1.8.0",
     "websocket": "^1.0.25",
-    "ws_protocol_layer": "github:Nunkiii/ws_protocol_layer",
-    "node-fits": "github:Nunkiii/node-fits"
+    "ws_protocol_layer": "github:Nunkiii/ws_protocol_layer"
   },
-    "devDependencies": {
-        
-    },
+  "devDependencies": {},
   "scripts": {
     "test": " No test file provided "
   },
