@@ -26,16 +26,16 @@ It provides following features:
 This project is born to provide the [OARPAF observatory](http://www.orsa.unige.net) with the best AllSkyCamera system and to help its robotization process.
 The final goal is to integrate to dynamically change image cuts; to provide a web interface to dynamically browse the image db, and to  add overlays to the image containing the position of celestial objects and of the OARPAF 80cm telescope during pointing, improving ESO solutions such as the [La Silla AllSky Camera](http://www.ls.eso.org/lasilla/dimm/lasc/). 
 
-
 # Installation
-
 
 ## Install node and npm if you need it.
 
 From:
 http://yoember.com/nodejs/the-best-way-to-install-node-js/
 
-On Linux (other OS are treated in the previous link):
+(see also https://github.com/creationix/nvm)
+
+On Linux (other OS are treated in previous links):
 
 ```bash
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
@@ -79,22 +79,8 @@ Enter in the jallsky directory and then:
 npm -f install 
 ```
 
-It will install all necessary npm modules as well as the  external `Nunkiii/ws_protocol_layer` module.
+It will install all necessary npm modules as well as the  external `Nunkiii/ws_protocol_layer` and  `Nunkiii/node-fits` github  modules via npm.
 
-## Install other external repositories: 
-
-Clone the external `node-fits` repository.
-
-```bash
-git clone https://github.com/Nunkiii/node-fits.git
-```
-
-`node-fits` has to be built. In its directory:
-
-```bash
-node-gyp configure
-node-gyp build
-```
 
 ## Configuration
 
@@ -119,7 +105,6 @@ On Debian-based distributions:
 ```
 
 Then `sass --watch style.sass:style.css` in order to dinamically compile the `sass` file into `css` at each saving.
-
 
 ### Contributors
 
