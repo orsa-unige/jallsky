@@ -56,6 +56,7 @@ var write_image=require("./write_image.js"); /// Creating png thumb and fits fil
 	console.log("launch_exposure: BEGIN, opening cam...");
 
         await cam.open();
+//        await cam.heater_on();
         await cam.send_test();
         await cam.define_subframe(params);
 	await cam.open_shutter();
@@ -84,6 +85,7 @@ var write_image=require("./write_image.js"); /// Creating png thumb and fits fil
         }
 
         await cam.close_shutter();
+//        await cam.heater_off();
         await cam.close();
 
         console.log("launch_exposure: DONE!");

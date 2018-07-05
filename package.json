@@ -10,7 +10,6 @@
     "julian": "^0.1.0",
     "mongodb": "^2.2.34",
     "node-fits": "github:Nunkiii/node-fits",
-    "node-schedule": "^1.3.0",
     "popper.js": "^1.13.0",
     "serialport": "^6.0.4",
     "suncalc": "^1.8.0",
@@ -28,7 +27,7 @@
   "author": "Davide Ricci, Pierre Sprimont",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/vertighel/jallsky-test/issues"
+    "url": "https://github.com/orsa-unige/jallsky/issues"
   },
-  "homepage": "https://github.com/vertighel/jallsky-test#readme"
+  "homepage": "https://github.com/orsa-unige/jallsky#readme"
 }

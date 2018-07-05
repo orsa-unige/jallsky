@@ -38,13 +38,29 @@
     { "key"     : "TIMEZONE",
       "value"   : 1,
       "comment" : "Time Zone"},
+
+    { "key"     : "PLTSIZEX",
+      "value"   : 4.736,
+      "comment" : "Plate X Dimension in mm (7.4um/px)"},
+
+    { "key"     : "PLTSIZEY",
+      "value"   : 3.552,
+      "comment" : "Plate Y Dimension in mm (7.4um/px)"},
+
+    { "key"     : "FOC-LEN",
+      "value"   : 1.4,
+      "comment" : "Focal length in mm"},
+
+    { "key"     : "F-RATIO",
+      "value"   : 1.4,
+      "comment" : "Focal ratio"},
     
     { "key"     : "EPOCH",
       "value"   : 2000.0,
       "comment" : "Equinox of celestial coordinate system"},
 
     { "key"     : "OBSERVER",
-      "value"   : "A-Team",
+      "value"   : "ORSA",
       "comment" : "Author of the observation"},
 
     { "key"     : "IMAGETYP",
