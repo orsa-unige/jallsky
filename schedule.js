@@ -14,7 +14,7 @@ var config = require('./config.json'); /// Configuration file
 var jall = require('./launch.js');     /// Handlers
 var db_obs= require('./db_obs.js');    /// DB functions
 
-var meteo= require('../jmeteo/meteo-data.js');    /// DB functions
+//var meteo= require('../jmeteo/meteo-data.js');    /// DB functions
 
 (function(params){
 

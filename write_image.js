@@ -11,8 +11,8 @@
 var julian = require("julian");      /// Julian Date conversion.
 var fs=require("fs");                /// File stream for writing with node-fits.
 
-//var fits = require('./node_modules/node-fits/build/Release/fits'); /// Manages fits files.
-var fits = require('../node-fits/build/Release/fits'); /// Manages fits files.
+var fits = require('./node_modules/node-fits/build/Release/fits'); /// Manages fits files.
+//var fits = require('../node-fits/build/Release/fits'); /// Manages fits files.
 var config= require('./config.json');   /// Configuration file.
 
 (function(){
