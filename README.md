@@ -38,7 +38,7 @@ http://yoember.com/nodejs/the-best-way-to-install-node-js/
 On Linux (other OS are treated in previous links):
 
 ```bash
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 
 nvm list
 nvm ls-remote
@@ -61,7 +61,7 @@ source ~/.nvm/nvm.sh
 On Debian-based linux distributions:
 
 ```bash
-sudo apt-get install node node-gyp g++ libpng-dev libjpeg-dev libcfitsio3-dev 
+sudo apt-get install node-gyp g++ libpng-dev libjpeg-dev libcfitsio-dev 
 sudo apt-get install mongodb
 ```
 
