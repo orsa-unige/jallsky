@@ -27,7 +27,12 @@ var db = new mongo.Db(config.mongo.database, new mongo.Server(config.mongo.ip, c
 		if (err) throw err;
 		collection.find({}).limit(1).sort({dateobs:-1}).toArray(function(err,result){
 		    if (err) throw err;
+                    if (result.length === 0){ /// different from 0
+                        console.log("the database is empty! Entering something")
+                        result[0]={histo:{start:100, step:50, data:[100,200,300,400,500]}};
+                    }
 		    result[0].whoami="database";
+                    
 		    //		    connection.send(JSON.stringify(result[0])); /// send the string to the client
 		    //		    console.log(JSON.stringify(result[0])); /// send the string to the client
 		    cb(result[0]);
@@ -67,7 +72,6 @@ var db = new mongo.Db(config.mongo.database, new mongo.Server(config.mongo.ip, c
 	    });
 	});
     };
-
 
     /// Update a document
     exports.update = function(doc,coll,cb){
