@@ -15,7 +15,7 @@ var http = require('http');
 var ws_mod=require("ws_protocol_layer/lib/node/ws_server.js");
 
 var config= require('./config.json');   /// Configuration file.
-var db_obs= require('./db_obs.js');     /// DB functions.
+//var db_obs= require('./db_obs.js');     /// DB functions.
 var schedule =require('./schedule.js'); /// Launches observations.
 
 /// 1) Create http server and listening.
@@ -100,9 +100,9 @@ console.log("WS server: handler pack installed OK!");
 
 wss.on("client_event", function(evt){
     if(evt.type=="join"){
-	db_obs.last_entry(config.allskycam.collection, function(data){
-	    evt.client.send(data.whoami, data); /// Sends the string to the client.
-	});
+	// db_obs.last_entry(config.allskycam.collection, function(data){
+	//     evt.client.send(data.whoami, data); /// Sends the string to the client.
+	// });
 	
     }
     

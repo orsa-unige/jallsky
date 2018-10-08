@@ -34,9 +34,9 @@ var write_image=require("./write_image.js"); /// Creating png thumb and fits fil
 
     cam.on('error', function(){
         return;
-        this.heater_on().catch(function(e){
-            console.log("Allsky camera error event : " + e);
-        });
+        // this.heater_on().catch(function(e){
+        //     console.log("Allsky camera error event : " + e);
+        // });
     });
 
     cam.on('disconnect', function(){
