@@ -24,7 +24,7 @@
 
     "mongo" : {
     	"database"    : "test",
-        "ip"          : "localhost",
+        "ip"          : "orsa-fork.local",
         "port"        : 27017,
 	"description" : "Parameters for mongodb connection."
     },
@@ -42,7 +42,7 @@
     },
 
     "meteo_station" : {
-	"device"      : "/dev/remserial1",
+	"device"      : "/dev/devremserial",
         "collection"  : "meteo_station",
 	"description" : "Parameters for Vantage Davis Pro connection and database collection."
     }

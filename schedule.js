@@ -12,7 +12,7 @@
 
 var config = require('./config.json'); /// Configuration file
 var jall = require('./launch.js');     /// Handlers
-var db_obs= require('./db_obs.js');    /// DB functions
+//var db_obs= require('./db_obs.js');    /// DB functions
 
 //var meteo= require('../jmeteo/meteo-data.js');    /// DB functions
 
@@ -28,9 +28,9 @@ var db_obs= require('./db_obs.js');    /// DB functions
 	jall.launch_exposure(params, ws_server, ws)
 	    .then(function(){
 		console.log("schedule: launch exposure done OK!");
-		db_obs.enter(params, config.allskycam.collection, function(){
-		    cb(null, "schedule: database enter OK!");
-		});
+		// db_obs.enter(params, config.allskycam.collection, function(){
+		//     cb(null, "schedule: database enter OK!");
+		// });
                 
 //                meteo.realtime();
 
