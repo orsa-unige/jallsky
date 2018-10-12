@@ -16,7 +16,7 @@
     },
 
     "ws" : {
-	"ip"          : "192.168.253.206",
+	"ip"          : "192.168.0.4",
         "hostname"    : "orsa.local",
         "port"        : 1234,
 	"description" : "Parameters of the websocket server."
