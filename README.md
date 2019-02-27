@@ -91,7 +91,9 @@ It will install all necessary npm modules as well as the  external `Nunkiii/ws_p
 
  - Launch the websocket server: `node ./server.2.js`
  - launch a webserver if you need one, such as `python -m SimpleHTTPServer 8000`, and open the html page
- - open the html page and use the camera;
+ - open the html page and use the camera:
+ 
+ ![screenshot](/screenshot.png)
 
 
 ## If you want to modify the page style
